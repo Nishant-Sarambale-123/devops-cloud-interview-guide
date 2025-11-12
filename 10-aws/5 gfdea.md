@@ -1,4 +1,3 @@
----
 
 ### **139. Explain NACL vs SG and which one do you use in your organization?**
 
