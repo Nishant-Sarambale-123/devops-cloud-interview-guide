@@ -1,0 +1,113 @@
+Here is **Q152** in your required interview format.
+
+---
+
+# **152. What is AWS STS and how does it work?**
+
+### **Short Explanation**
+
+Tests understanding of temporary credentials, cross-account access, and secure authentication.
+
+---
+
+# **Answer**
+
+AWS STS (Security Token Service) provides **temporary, short-lived credentials** to access AWS resources.
+It works by **issuing temporary Access Key + Secret Key + Session Token** after a user or service **assumes a role**.
+
+---
+
+# **Detailed Explanation**
+
+AWS STS is used whenever you need **temporary**, **auto-expiring**, or **cross-account** permissions.
+
+---
+
+# **How STS Works (Simple Flow)**
+
+1. A user/app **requests** to assume a role.
+2. AWS STS checks the **trust policy** of the role.
+3. If allowed → STS issues **temporary credentials**:
+
+   * AccessKeyId
+   * SecretAccessKey
+   * SessionToken
+4. User/service uses these credentials to access resources.
+5. Credentials expire automatically (15 minutes – 12 hours depending on role).
+
+---
+
+# **Common STS API Operations**
+
+| API                         | Purpose                                           |
+| --------------------------- | ------------------------------------------------- |
+| `AssumeRole`                | Cross-account access, temporary role access       |
+| `AssumeRoleWithSAML`        | SSO/SAML authentication                           |
+| `AssumeRoleWithWebIdentity` | Cognito / Identity Providers                      |
+| `GetSessionToken`           | MFA-based temporary access                        |
+| `GetFederationToken`        | Temporary console access for federated identities |
+
+---
+
+# **Where STS Is Used in Real Life**
+
+### ✅ **1. Cross-account access**
+
+Example:
+
+* Account A Lambda → Account B DynamoDB
+* Account A EC2 → Account B S3
+
+Uses `sts:AssumeRole`.
+
+---
+
+### ✅ **2. Temporary credentials for applications**
+
+Avoid long-term access keys.
+
+Applications use:
+
+* AssumeRole
+* IAM Roles for EC2/Lambda/EKS
+
+---
+
+### ✅ **3. MFA protected access**
+
+Admins use:
+`GetSessionToken` + MFA
+→ stronger security.
+
+---
+
+### ✅ **4. SSO / IAM Identity Center**
+
+STS is used internally to issue temporary session credentials after login.
+
+---
+
+### **Security Benefit**
+
+**Even if temporary credentials are exposed, they expire automatically → reduces blast radius.**
+
+---
+
+# **Summary Table**
+
+| Feature  | Description                         |
+| -------- | ----------------------------------- |
+| Purpose  | Issue temporary credentials         |
+| How      | Assume role → STS returns temp keys |
+| Duration | 15 min to 12 hours                  |
+| Used for | Cross-account, SSO, MFA, apps       |
+
+---
+
+# **Key Takeaway**
+
+**AWS STS = Secure temporary access + cross-account access using AssumeRole.**
+
+---
+
+Ready for **153. What is a trust policy in AWS and why is it used?**
