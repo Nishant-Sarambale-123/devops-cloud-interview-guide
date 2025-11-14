@@ -1,0 +1,122 @@
+Here is **Q153** in your required interview format.
+
+---
+
+# **153. What is a Trust Policy in AWS and why is it used?**
+
+### **Short Explanation**
+
+Tests your understanding of **IAM Roles**, **STS AssumeRole**, and **cross-account access**.
+
+---
+
+# **Answer**
+
+A **trust policy** defines **who is allowed to assume an IAM role**.
+It is used to establish trust between **AWS services**, **users**, or **AWS accounts**, enabling STS to issue temporary credentials.
+
+---
+
+# **Detailed Explanation**
+
+A **trust policy** is attached to an **IAM Role** and specifies:
+
+* **WHO** can assume the role (Principal)
+* **HOW** they can assume it (Action)
+* **CONDITIONS** like MFA, IP range, etc.
+
+It works together with the **permissions policy**.
+
+---
+
+# **1. Example Trust Policy (Basic AssumeRole)**
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::111122223333:role/AppRole"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+```
+
+This means:
+**Role can be assumed by AppRole from account 111122223333.**
+
+---
+
+# **2. Example Trust Policy for AWS Service (Lambda / EC2)**
+
+### *EC2:*
+
+```json
+{
+  "Effect": "Allow",
+  "Principal": { "Service": "ec2.amazonaws.com" },
+  "Action": "sts:AssumeRole"
+}
+```
+
+This means:
+**EC2 instances are allowed to assume this role.**
+
+---
+
+### *Lambda:*
+
+```json
+{
+  "Effect": "Allow",
+  "Principal": { "Service": "lambda.amazonaws.com" },
+  "Action": "sts:AssumeRole"
+}
+```
+
+---
+
+# **3. Why Trust Policy Is Needed**
+
+| Purpose                              | Explanation                                             |
+| ------------------------------------ | ------------------------------------------------------- |
+| **Enable STS AssumeRole**            | Allows IAM or AWS services to get temporary credentials |
+| **Cross-Account Access**             | Account A → Account B                                   |
+| **Attach IAM roles to AWS services** | EC2, Lambda, EKS, ECS, Glue, etc.                       |
+| **Security Control**                 | You decide exactly who can assume a role                |
+
+---
+
+# **4. Trust Policy vs Permissions Policy**
+
+| Type                   | Purpose                         |
+| ---------------------- | ------------------------------- |
+| **Trust Policy**       | WHO can assume the role         |
+| **Permissions Policy** | WHAT they can do after assuming |
+
+---
+
+# **Real-Life Example**
+
+To allow Lambda in Account A to access DynamoDB in Account B:
+
+* Account B role must have:
+  **Trust policy** → allows Lambda role from A
+* Account B role must have:
+  **Permissions policy** → allows DynamoDB actions
+
+Both are mandatory.
+
+---
+
+# **Key Takeaway**
+
+**A trust policy defines WHO can assume a role, while a permissions policy defines WHAT they can do. Both are required for secure cross-account or service-role access.**
+
+---
+
+Ready for **154. How a Lambda function in Account A interacts with DynamoDB in Account B?**
