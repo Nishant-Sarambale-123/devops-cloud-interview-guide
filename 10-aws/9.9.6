@@ -1,0 +1,175 @@
+Here is the next answer.
+
+---
+
+# **158. Have you worked with Lambda in AWS? Explain your activities with Lambda.**
+
+## **Short Explanation:**
+
+Tests your real hands-on experience with serverless automation.
+
+---
+
+## **Answer:**
+
+Yes. I worked with Lambda for **automation, event-driven tasks, API backend logic, S3 triggers, CloudWatch scheduled jobs, and cross-account operations** using STS and IAM roles.
+
+---
+
+## **Detailed Explanation**
+
+Below is a strong interview-ready explanation of real DevOps work with Lambda:
+
+---
+
+## **1. **Automation Tasks**
+
+I used Lambda to automate:
+
+* Stopping/starting EC2 instances based on schedule
+* EBS snapshot automation
+* Cleaning old S3 objects
+* Automatic IAM key rotation
+* Auto-remediating misconfigured security groups
+
+Example:
+A daily Lambda triggered by EventBridge:
+
+```json
+{
+  "schedule": "cron(0 1 * * ? *)"
+}
+```
+
+---
+
+## **2. **S3 Event Triggers**
+
+I created Lambdas triggered by S3:
+
+* Process logs uploaded by applications
+* Move files to Glacier automatically
+* Resize images (thumbnail generation)
+* Validate uploaded JSON/YAML files
+
+S3 event mapping:
+
+```
+s3:ObjectCreated:*
+```
+
+---
+
+## **3. **API Gateway + Lambda Backend**
+
+I deployed serverless APIs:
+
+* API Gateway → Lambda → DynamoDB
+* Authentication using Cognito
+* CORS handling
+* Built REST and WebSocket APIs
+
+Use case:
+Lightweight APIs that don’t require EC2 or containers.
+
+---
+
+## **4. **CloudWatch EventBridge Scheduled Jobs**
+
+Examples:
+
+* Cleanup unattached EBS volumes
+* Rotate backup snapshots
+* Trigger Glue jobs
+* Auto update Route53 records
+
+---
+
+## **5. **Cross-Account Operations (STS)**
+
+Use Lambda to access S3 in another account:
+
+1. Assume an IAM role in Account B
+2. Generate temporary credentials
+3. Access bucket from Account A
+
+Sample code:
+
+```python
+sts.assume_role(RoleArn='arn:aws:iam::111122223333:role/targetRole')
+```
+
+---
+
+## **6. **Monitoring, Alerts & Log Processing**
+
+* Pushing custom metrics to CloudWatch
+* Parsing VPC Flow Logs & ALB logs
+* Notifying Slack using webhooks
+
+Example:
+Send Slack alert when CPU > 80%.
+
+---
+
+## **7. **Infrastructure Deployment using IaC**
+
+I deployed Lambda using:
+
+* Terraform
+* CloudFormation
+* SAM framework
+* Serverless framework
+
+Included:
+
+* Layers
+* Versions
+* Aliases
+* Custom runtime
+
+---
+
+## **8. **Performance Optimization**
+
+I optimized Lambda by:
+
+* Increasing memory = more CPU
+* Using layers for common libraries
+* Enabling provisioned concurrency
+* Using async invokes
+* Monitoring with X-Ray
+
+---
+
+## **9. **Troubleshooting Lambda Failures**
+
+* Check CloudWatch logs
+* Inspect DLQ (SQS) for failed events
+* Fix timeouts
+* Increase memory
+* Verify IAM role permissions
+* Retry logic
+
+---
+
+## **Summary Table**
+
+| Activity             | Tools Used          | Benefit                    |
+| -------------------- | ------------------- | -------------------------- |
+| Automation           | EventBridge, Lambda | Removes manual tasks       |
+| S3 triggers          | S3 → Lambda         | Serverless data workflows  |
+| API backend          | API Gateway         | No servers needed          |
+| Cross-account access | STS                 | Secure account integration |
+| Logging & alerting   | CW logs/X-Ray       | Faster debugging           |
+| IaC                  | Terraform/SAM       | Versioned deployments      |
+
+---
+
+## **Key Takeaway:**
+
+**Lambda = automation + serverless APIs + event-driven workflows — essential in DevOps pipelines.**
+
+---
+
+Ready for **159. What is the difference between IAM User & IAM Role?**
